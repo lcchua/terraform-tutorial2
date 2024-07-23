@@ -39,4 +39,4 @@ terraform.rc
 # Terraform plan output file
 terraform_out
 
-# .DS_Store
+.DS_Store
