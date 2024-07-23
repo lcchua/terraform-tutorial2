@@ -187,8 +187,42 @@ resource "aws_security_group" "web_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-    tags = {
+  tags = {
     group = var.stack_name
     Name  = "stw-web-sg"
+  }
+}
+
+
+
+# Create VPC
+
+
+
+# S3 bucket with versioning enabled
+resource "random_id" "s3_id" {
+    byte_length = 2
+}
+
+resource "aws_s3_bucket" "devops_s3bucket" {
+  bucket = "devops-bucket-${random_id.s3_id.dec}"
+#  bucket_prefix = ""
+
+  tags = {
+      Env = "dev"
+      Name = "stw-s3-bucket"
+      group = var.stack_name
+  }
+}
+
+resource "aws_s3_bucket_acl" "devops_s3bucket_acl" {
+  bucket = aws_s3_bucket.devops_s3bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "devops_s3bucket_versioning" {
+  bucket = aws_s3_bucket.exampledevops_s3bucket.id
+  versioning_configuration {
+    status = "Enabled"
   }
 }
