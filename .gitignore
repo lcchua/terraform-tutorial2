@@ -33,4 +33,10 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Terraform lock file
+.terraform.lock.hcl
+
+# Terraform plan output file
+terraform_out
+
 # .DS_Store
