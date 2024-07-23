@@ -2,18 +2,15 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "3.66.0"
+      version = "~> 5.0"
     }
   }
 }
 
-
-
-provider "aws" {
-  region  = "insert-here-your-destination-region"
-  profile = "insert-here your-aws-profile-name"
-}
-
+provider "aws" {)
+#  region  = "us-east-1"
+#  profile = "lcchua7"
+#}
 
 
 #============ VPC =============
@@ -85,8 +82,6 @@ resource "aws_subnet" "stw_subnet_public_2" {
     Name  = "stw_subnet_public_2"
   }
 }
-
-
 
 
 
