@@ -7,10 +7,7 @@ terraform {
   }
 }
 
-provider "aws" {
-#  region  = "us-east-1"
-#  profile = "lcchua7"
-}
+provider "aws" {}
 
 
 #============ VPC =============
