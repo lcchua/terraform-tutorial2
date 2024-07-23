@@ -221,7 +221,7 @@ resource "aws_s3_bucket_acl" "devops_s3bucket_acl" {
 }
 
 resource "aws_s3_bucket_versioning" "devops_s3bucket_versioning" {
-  bucket = aws_s3_bucket.exampledevops_s3bucket.id
+  bucket = aws_s3_bucket.devops_s3bucket.id
   versioning_configuration {
     status = "Enabled"
   }
