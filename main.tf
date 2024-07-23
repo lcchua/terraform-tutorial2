@@ -7,7 +7,9 @@ terraform {
   }
 }
 
-provider "aws" {}
+provider "aws" {
+  region = "us-east-1"
+}
 
 
 #============ VPC =============
@@ -24,63 +26,63 @@ resource "aws_vpc" "stw_vpc" {
 
 #============ INTERNET GATEWAY =============
 
-resource "aws_internet_gateway" "stw_gw" {
+resource "aws_internet_gateway" "stw_igw" {
   vpc_id = aws_vpc.stw_vpc.id
 
   tags = {
     group = var.stack_name
-    Name  = "stw_gw"
+    Name  = "stw_igw"
   }
 }
 
 
 #============ SUBNETS =============
 
-resource "aws_subnet" "stw_subnet_private_1" {
+resource "aws_subnet" "stw_subnet_private_1a" {
   vpc_id            = aws_vpc.stw_vpc.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = "us-east-1a"
 
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_private_1"
+    Name  = "stw_subnet_private_1a"
   }
 }
 
-resource "aws_subnet" "stw_subnet_private_2" {
+resource "aws_subnet" "stw_subnet_private_1b" {
   vpc_id            = aws_vpc.stw_vpc.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = "eu-west-1b"
+  availability_zone = "us-east-1b"
 
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_private_2"
+    Name  = "stw_subnet_private_1b"
   }
 }
 
-resource "aws_subnet" "stw_subnet_public_1" {
+resource "aws_subnet" "stw_subnet_public_1a" {
   vpc_id                  = aws_vpc.stw_vpc.id
-  cidr_block              = "10.0.101.0/24"
-  map_public_ip_on_launch = true
-  availability_zone       = "eu-west-1a"
+ : cidr_block              = "10.0.101.0/24"
+#  map_public_ip_on_launch = true
+  availability_zone       = "us-east-1a"
+ 
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_public_1"
+    Name  = "stw_subnet_public_1a"
   }
 }
 
-resource "aws_subnet" "stw_subnet_public_2" {
+resource "aws_subnet" "stw_subnet_public_1b" {
   vpc_id                  = aws_vpc.stw_vpc.id
   cidr_block              = "10.0.102.0/24"
-  map_public_ip_on_launch = true
-  availability_zone       = "eu-west-1b"
+#  map_public_ip_on_launch = true
+  availability_zone       = "us-east-1b"
+
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_public_2"
+    Name  = "stw_subnet_public_1b"
   }
 }
-
-
 
 
 #============ NAT GATEWAY =============
@@ -125,7 +127,7 @@ resource "aws_route_table" "stw_rt_public" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.stw_gw.id
+    gateway_id = aws_internet_gateway.stw_igw.id
   }
 
   tags = {
@@ -135,19 +137,53 @@ resource "aws_route_table" "stw_rt_public" {
 }
 
 
-resource "aws_route_table_association" "stw_rta_public_1" {
-  subnet_id      = aws_subnet.stw_subnet_public_1.id
+resource "aws_route_table_association" "stw_rta_public_1a" {
+  subnet_id      = aws_subnet.stw_subnet_public_1a.id
   route_table_id = aws_route_table.stw_rt_public.id
 }
-resource "aws_route_table_association" "stw_rta_public_2" {
-  subnet_id      = aws_subnet.stw_subnet_public_2.id
+resource "aws_route_table_association" "stw_rta_public_1b" {
+  subnet_id      = aws_subnet.stw_subnet_public_1b.id
   route_table_id = aws_route_table.stw_rt_public.id
 }
-resource "aws_route_table_association" "stw_rta_private_1" {
-  subnet_id      = aws_subnet.stw_subnet_private_1.id
+resource "aws_route_table_association" "stw_rta_private_1a" {
+  subnet_id      = aws_subnet.stw_subnet_private_1a.id
   route_table_id = aws_route_table.stw_rt_private.id
 }
-resource "aws_route_table_association" "stw_rta_private_2" {
-  subnet_id      = aws_subnet.stw_subnet_private_2.id
+resource "aws_route_table_association" "stw_rta_private_1b" {
+  subnet_id      = aws_subnet.stw_subnet_private_1b.id
   route_table_id = aws_route_table.stw_rt_private.id
+}
+
+
+
+resource "aws_security_group" "web_sg" {
+  name   = "HTTP HTTPS SSH"
+  vpc_id = aws_vpc.stw_vpc.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+    ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
