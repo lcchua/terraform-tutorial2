@@ -15,3 +15,15 @@ variable "region" {
   type        = string
   default     = "us-east-1"
 }
+
+variable "az1" {
+  description = "Name of availability zone 1"
+  type        = string
+  default     = "us-east-1d"
+}
+
+variable "az2" {
+  description = "Name of availability zone 21"
+  type        = string
+  default     = "us-east-1e"
+}
