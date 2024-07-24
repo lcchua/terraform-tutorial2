@@ -19,7 +19,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
 
 
@@ -116,7 +116,6 @@ resource "aws_eip" "stw_eip" {
 }
 
 
-
 #============ ROUTE TABLES + ASSOCIATIONS =============
 
 resource "aws_route_table" "stw_rt_private" {
@@ -163,6 +162,20 @@ resource "aws_route_table_association" "stw_rta_private_1a" {
 resource "aws_route_table_association" "stw_rta_private_1b" {
   subnet_id      = aws_subnet.stw_subnet_private_1b.id
   route_table_id = aws_route_table.stw_rt_private.id
+}
+
+
+#============ VPC ENDPOINT FOR S3 =============
+
+resource "aws_vpc_endpoint" "stw_vpc_ep_s3" {
+  vpc_id       = aws_vpc.stw_vpc.id
+  service_name = "com.amazonaws.${var.region}.s3"
+  vpc_endpoint_type = "Gateway"
+  route_table_ids = [aws_route_table.stw_rt_private.id, aws_route_table.stw_rt_public.id]
+
+  tags = {
+    Name = "stw-vpc-s3-endpoint"
+  }
 }
 
 
