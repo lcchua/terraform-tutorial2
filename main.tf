@@ -227,7 +227,7 @@ resource "aws_instance" "devops_ec2" {
 
 #============ S3 BUCKET =============
 
-# Bucket with versioning enabled
+# Bucket with versioning enabled and acl set to public read
 resource "random_id" "s3_id" {
     byte_length = 2
 }
@@ -242,6 +242,7 @@ resource "aws_s3_bucket" "devops_s3bucket" {
   }
 }
 
+# Enable bucket versioning 
 resource "aws_s3_bucket_versioning" "devops_s3bucket_versioning" {
   bucket = aws_s3_bucket.devops_s3bucket.id
   versioning_configuration {
@@ -249,3 +250,29 @@ resource "aws_s3_bucket_versioning" "devops_s3bucket_versioning" {
   }
 }
 
+# Enable public read ACL
+resource "aws_s3_bucket_ownership_controls" "devops_s3bucket_owner_ctl" {
+  bucket = aws_s3_bucket.devops_s3bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "devops_s3bucket_pub_access_blk" {
+  bucket = aws_s3_bucket.devops_s3bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_acl" "devops_s3bucket_acl" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.devops_s3bucket_owner_ctl,
+    aws_s3_bucket_public_access_block.devops_s3bucket_pub_access_blk,
+  ]
+
+  bucket = aws_s3_bucket.devops_s3bucket.id
+  acl    = "public-read"
+}

@@ -87,3 +87,8 @@ output "devops_s3bucket_versioning" {
   description = "18 stw devops S3 bucket versioning"
   value = aws_s3_bucket_versioning.devops_s3bucket_versioning.id
 }
+
+output "devops_s3bucket_acl" {
+  description = "19 stw devops S3 bucket acl set to public read"
+  value = aws_s3_bucket_acl.devops_s3bucket_acl.id
+}
