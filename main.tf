@@ -209,7 +209,7 @@ resource "aws_security_group" "stw_web_sg" {
 
 #============ EC2 =============
 
-resource "aws_instance" "stw_devops_ec2" {
+resource "aws_instance" "devops_ec2" {
   ami           = "ami-0b72821e2f351e396"
   instance_type = "t2.micro"
   key_name      = var.key_name
@@ -232,7 +232,7 @@ resource "random_id" "s3_id" {
     byte_length = 2
 }
 
-resource "aws_s3_bucket" "stw_devops_s3bucket" {
+resource "aws_s3_bucket" "devops_s3bucket" {
   bucket = "devops-bucket-${random_id.s3_id.dec}"
 #  bucket_prefix = ""
 
@@ -243,12 +243,12 @@ resource "aws_s3_bucket" "stw_devops_s3bucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "stw_devops_s3bucket_acl" {
+resource "aws_s3_bucket_acl" "devops_s3bucket_acl" {
   bucket = aws_s3_bucket.devops_s3bucket.id
   acl    = "private"
 }
 
-resource "aws_s3_bucket_versioning" "stw_devops_s3bucket_versioning" {
+resource "aws_s3_bucket_versioning" "devops_s3bucket_versioning" {
   bucket = aws_s3_bucket.devops_s3bucket.id
   versioning_configuration {
     status = "Enabled"
