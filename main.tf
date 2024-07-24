@@ -1,3 +1,5 @@
+
+
 #============ MAIN =============
 
 terraform {
@@ -207,6 +209,20 @@ resource "aws_security_group" "web_sg" {
 
 #============ EC2 =============
 
+resource "aws_instance" "devops_ec2" {
+  ami           = "ami-0b72821e2f351e396"
+  instance_type = "t2.micro"
+  key_name      = var.key_name
+  subnet_id     = aws_subnet.stw_subnet_public_1a.id
+  associate_public_ip_address = true
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+
+  tags = {
+    group = var.stack_name
+    Name = "stw-webserver"
+  }
+}
+
 
 
 #============ S3 BUCKET =============
@@ -221,9 +237,9 @@ resource "aws_s3_bucket" "devops_s3bucket" {
 #  bucket_prefix = ""
 
   tags = {
-      Env = "dev"
-      Name = "stw-s3-bucket"
       group = var.stack_name
+      Env = "Dev"
+      Name = "stw-s3-bucket"
   }
 }
 
