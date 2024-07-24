@@ -85,7 +85,7 @@ resource "aws_subnet" "stw_subnet_public_1b" {
 }
 
 
-#============ NAT GATEWAY =============
+#============ NAT GATEWAY + EIP =============
 
 resource "aws_nat_gateway" "stw_nat_gw" {
   allocation_id = aws_eip.stw_eip.id
@@ -106,7 +106,7 @@ resource "aws_eip" "stw_eip" {
 
 
 
-#============ ROUTE TABLES =============
+#============ ROUTE TABLES + ASSOCIATIONS =============
 
 resource "aws_route_table" "stw_rt_private" {
   vpc_id = aws_vpc.stw_vpc.id
@@ -155,6 +155,7 @@ resource "aws_route_table_association" "stw_rta_private_1b" {
 }
 
 
+#============ SECURITY GROUP =============
 
 resource "aws_security_group" "web_sg" {
   name   = "HTTP HTTPS SSH"
@@ -195,11 +196,13 @@ resource "aws_security_group" "web_sg" {
 
 
 
-# Create VPC
+#============ EC2 =============
 
 
 
-# S3 bucket with versioning enabled
+#============ S3 BUCKET =============
+
+# Bucket with versioning enabled
 resource "random_id" "s3_id" {
     byte_length = 2
 }
