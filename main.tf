@@ -234,7 +234,6 @@ resource "random_id" "s3_id" {
 
 resource "aws_s3_bucket" "devops_s3bucket" {
   bucket = "devops-bucket-${random_id.s3_id.dec}"
-#  bucket_prefix = ""
 
   tags = {
       group = var.stack_name
@@ -243,14 +242,10 @@ resource "aws_s3_bucket" "devops_s3bucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "devops_s3bucket_acl" {
-  bucket = aws_s3_bucket.devops_s3bucket.id
-  acl    = "private"
-}
-
 resource "aws_s3_bucket_versioning" "devops_s3bucket_versioning" {
   bucket = aws_s3_bucket.devops_s3bucket.id
   versioning_configuration {
     status = "Enabled"
   }
 }
+
