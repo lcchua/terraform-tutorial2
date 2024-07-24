@@ -25,7 +25,7 @@ output "stw_subnet_public_1b_id" {
 
 output "stw_nat_gw" {
   description = "stw NAT gateway"
-  value       = aws_subnet.stw_nat_gw.id
+  value       = aws_nat_gateway.stw_nat_gw.id
 }
 
 output "stw_eip" {
