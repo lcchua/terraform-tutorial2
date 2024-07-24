@@ -215,7 +215,7 @@ resource "aws_instance" "devops_ec2" {
   key_name      = var.key_name
   subnet_id     = aws_subnet.stw_subnet_public_1a.id
   associate_public_ip_address = true
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  vpc_security_group_ids = [aws_security_group.stw_web_sg.id]
 
   tags = {
     group = var.stack_name
