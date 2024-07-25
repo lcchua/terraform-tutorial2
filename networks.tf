@@ -244,6 +244,7 @@ resource "aws_vpc_endpoint" "lcchua-tf-vpce-s3" {
   ]
 
   tags = {
+    group = var.stack_name
     Name = "stw-vpc-s3-endpoint"
   }
 }
