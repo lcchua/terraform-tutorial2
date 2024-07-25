@@ -5,15 +5,7 @@ data "aws_ami" "lcchua-tf-ami" {
 
   filter {
     name   = "name"
-    values = ["Amazon Linux 2023 AMI"]
-  }
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
+    values = ["Amazon Linux 2023*"]
   }
 }
 output "ami" {
