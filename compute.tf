@@ -2,6 +2,8 @@
 #============ EC2 INSTANCE =============
 
 data "aws_ami" "lcchua-tf-ami" {
+  most_recent = true
+  owners      = ["amazon"]
 
   filter {
     name   = "name"
