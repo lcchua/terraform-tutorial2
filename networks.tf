@@ -238,7 +238,7 @@ resource "aws_vpc_endpoint" "lcchua-tf-vpce-s3" {
   service_name = "com.amazonaws.${var.region}.s3"
   vpc_endpoint_type = "Gateway"
   route_table_ids = [
-    aws_route_table.lcchua-tf-private-rtb-az1.id
+    aws_route_table.lcchua-tf-public-rtb.id
 #    aws_route_table.lcchua-tf-private-rtb-az1.id,
 #    aws_route_table.lcchua-tf-private-rtb-az2.id,
 #    aws_route_table.lcchua-tf-public-rtb.id
