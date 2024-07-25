@@ -3,7 +3,7 @@
 #resource "tls_private_key" "lcchua-tf-key-pair" {
 #  algorithm = "RSA"
 #  rsa_bits  = 4096
-}
+#}
 
 # To create AWS key pair
 #resource "aws_key_pair" "lcchua-tf-key-pair" {
