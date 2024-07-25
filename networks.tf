@@ -104,7 +104,7 @@ output "public-subnet-az2" {
 
 resource "aws_nat_gateway" "lcchua-tf-nat-gw" {
   allocation_id = aws_eip.lcchua-tf-eip.id
-  subnet_id     = aws_subnet.lcchua-tf-public-subnet-az1
+  subnet_id     = aws_subnet.lcchua-tf-public-subnet-az1.id
 
   tags = {
     Name  = "stw-nat-gw"

@@ -2,7 +2,6 @@
 #============ EC2 INSTANCE =============
 
 data "aws_ami" "lcchua-tf-ami" {
-  owners = ["amazon"]
 
   filter {
     name   = "name"
@@ -15,10 +14,6 @@ data "aws_ami" "lcchua-tf-ami" {
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
-  }
-  filter {
-    name = "architecture"
-    values = ["Arm"]
   }
 }
 output "ami" {
