@@ -7,7 +7,7 @@ data "aws_ami" "lcchua-tf-ami" {
 
   filter {
     name   = "name"
-    values = ["Amazon Linux 2023*"]
+    values = ["ami-0582e4fe9b72a5fe1"]
   }
 }
 output "ami" {
