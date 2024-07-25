@@ -11,7 +11,7 @@ data "aws_ami" "lcchua-tf-ami" {
   }
   filter {
     name    = "image-id"
-    values  = ["ami-0582e4fe9b72a5fe1"]
+    values  = ["ami-0427090fd1714168b"]
   }
 }
 output "ami" {
