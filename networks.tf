@@ -6,7 +6,7 @@ resource "aws_vpc" "lcchua-tf-vpc" {
 
   tags = {
     group = var.stack_name
-    Name  = "stw_vpc"
+    Name  = "stw-vpc"
   }
 }
 output "vpc-id" {
@@ -18,21 +18,22 @@ output "vpc-id" {
 #============ INTERNET GATEWAY =============
 
 resource "aws_internet_gateway" "lcchua-tf-igw" {
-  vpc_id = aws_vpc.stw_vpc.id
+  vpc_id = aws_vpc.lcchua-tf-vpc.id
 
   tags = {
     group = var.stack_name
-    Name  = "stw_igw"
+    Name  = "stw-igw"
   }
 }
 output "igw" {
   description = "2 stw igw"
-  value       = aws_internet_gateway.stw_igw.id
+  value       = aws_internet_gateway.lcchua-tf-igw.id
 }
 
 
 #============ SUBNETS =============
 
+# Private subnet az1
 resource "aws_subnet" "lcchua-tf-private-subnet-az1" {
   vpc_id            = aws_vpc.lcchua-tf-vpc.id
   cidr_block        = "10.0.1.0/24"
@@ -40,7 +41,7 @@ resource "aws_subnet" "lcchua-tf-private-subnet-az1" {
 
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_private_az1"
+    Name  = "stw-subnet-private-az1"
   }
 }
 output "private-subnet-az1" {
@@ -48,6 +49,7 @@ output "private-subnet-az1" {
   value       = aws_subnet.lcchua-tf-private-subnet-az1.id
 }
 
+# Private subnet az2
 resource "aws_subnet" "lcchua-tf-private-subnet-az2" {
   vpc_id            = aws_vpc.lcchua-tf-vpc.id
   cidr_block        = "10.0.2.0/24"
@@ -55,7 +57,7 @@ resource "aws_subnet" "lcchua-tf-private-subnet-az2" {
 
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_private_az2"
+    Name  = "stw-subnet-private-az2"
   }
 }
 output "private-subnet-az2" {
@@ -63,6 +65,7 @@ output "private-subnet-az2" {
   value       = aws_subnet.lcchua-tf-private-subnet-az2.id
 }
 
+# Public subnet az1
 resource "aws_subnet" "lcchua-tf-public-subnet-az1" {
   vpc_id                   = aws_vpc.lcchua-tf-vpc.id
   cidr_block              = "10.0.101.0/24"
@@ -71,7 +74,7 @@ resource "aws_subnet" "lcchua-tf-public-subnet-az1" {
  
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_public_az1"
+    Name  = "stw-subnet-public-az1"
   }
 }
 output "public-subnet-az1" {
@@ -79,6 +82,7 @@ output "public-subnet-az1" {
   value       = aws_subnet.lcchua-tf-public-subnet-az1.id
 }
 
+# Public subnet az2
 resource "aws_subnet" "lcchua-tf-public-subnet-az2" {
   vpc_id                  = aws_vpc.lcchua-tf-vpc.id
   cidr_block              = "10.0.102.0/24"
@@ -87,7 +91,7 @@ resource "aws_subnet" "lcchua-tf-public-subnet-az2" {
 
   tags = {
     group = var.stack_name
-    Name  = "stw_subnet_public_az2"
+    Name  = "stw-subnet-public-az2"
   }
 }
 output "public-subnet-az2" {
@@ -103,7 +107,7 @@ resource "aws_nat_gateway" "lcchua-tf-nat-gw" {
   subnet_id     = aws_subnet.lcchua-tf-public-subnet-az1
 
   tags = {
-    Name  = "stw_nat_gw"
+    Name  = "stw-nat-gw"
     group = var.stack_name
   }
 }
@@ -115,7 +119,7 @@ output "nat-gw" {
 resource "aws_eip" "lcchua-tf-eip" {
   tags = {
     group = var.stack_name
-    Name  = "stw_eip"
+    Name  = "stw-eip"
   }
 }
 output "eip" {
@@ -126,6 +130,7 @@ output "eip" {
 
 #============ ROUTE TABLES =============
 
+# Private rtb az1
 resource "aws_route_table" "lcchua-tf-private-rtb-az1" {
   vpc_id = aws_vpc.lcchua-tf-vpc.id
 
@@ -144,6 +149,7 @@ output "private-rtb-az1" {
   value       = aws_route_table.lcchua-tf-private-rtb-az1.id
 }
 
+# Private rtb az2
 resource "aws_route_table" "lcchua-tf-private-rtb-az2" {
   vpc_id = aws_vpc.lcchua-tf-vpc.id
 
@@ -159,15 +165,16 @@ resource "aws_route_table" "lcchua-tf-private-rtb-az2" {
 }
 output "private-rtb-az2" {
   description = "9b stw private subnet route table"
-  value       = aws_route_table.lcchua-tf-private-rtb-az2
+  value       = aws_route_table.lcchua-tf-private-rtb-az2.id
 }
 
+# Public rtb
 resource "aws_route_table" "lcchua-tf-public-rtb" {
   vpc_id = aws_vpc.lcchua-tf-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.stw_igw.id
+    gateway_id = aws_internet_gateway.lcchua-tf-igw.id
   }
 
   tags = {
@@ -183,40 +190,44 @@ output "public-rtb" {
 
 #============ ROUTE TABLES ASSOCIATIONS =============
 
+# Public rta az1
 resource "aws_route_table_association" "lcchua-tf-public-rta-az1" {
   subnet_id      = aws_subnet.lcchua-tf-public-subnet-az1.id
-  route_table_id = aws_route_table.lcchua-tf-public-rtb
+  route_table_id = aws_route_table.lcchua-tf-public-rtb.id
 }
 output "public-rta-az1" {
   description = "11 stw public rta az1"
-  value       = aws_route_table_association.lcchua-tf-public-rta-az1
+  value       = aws_route_table_association.lcchua-tf-public-rta-az1.id
 }
 
+# Pubic rta az2
 resource "aws_route_table_association" "lcchua-tf-public-rta-az2" {
-  subnet_id      = aws_subnet.lcchua-tf-public-subnet-az2
-  route_table_id = aws_route_table.lcchua-tf-public-rtb
+  subnet_id      = aws_subnet.lcchua-tf-public-subnet-az2.id
+  route_table_id = aws_route_table.lcchua-tf-public-rtb.id
 }
 output "public-rta-az2" {
   description = "12 stw public rta az2"
   value       = aws_route_table_association.lcchua-tf-public-rta-az2.id
 }
 
+# Private rta az1
 resource "aws_route_table_association" "lcchua-tf-private-rta-az1" {
-  subnet_id      = aws_subnet.lcchua-tf-private-subnet-az1
-  route_table_id = aws_route_table.lcchua-tf-private-rtb-az1
+  subnet_id      = aws_subnet.lcchua-tf-private-subnet-az1.id
+  route_table_id = aws_route_table.lcchua-tf-private-rtb-az1.id
 }
 output "private-rta-az1" {
   description = "13 stw private rta az1"
   value       = aws_route_table_association.lcchua-tf-private-rta-az1.id
 }
 
+# Private rta az2
 resource "aws_route_table_association" "lcchua-tf-private-rta_az2" {
-  subnet_id      = aws_subnet.lcchua-tf-private-subnet-az2
-  route_table_id = aws_route_table.lcchua-tf-private-rtb-az2
+  subnet_id      = aws_subnet.lcchua-tf-private-subnet-az2.id
+  route_table_id = aws_route_table.lcchua-tf-private-rtb-az2.id
 }
 output "private-rta-az2" {
   description = "14 stw private rta az2"
-  value       = aws_route_table_association.lcchua-tf-private-rta_az2
+  value       = aws_route_table_association.lcchua-tf-private-rta_az2.id
 }
 
 
