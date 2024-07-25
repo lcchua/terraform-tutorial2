@@ -9,9 +9,9 @@ resource "aws_vpc" "lcchua-tf-vpc" {
     Name  = "stw_vpc"
   }
 }
-output "stw_vpc_id" {
+output "vpc-id" {
   description = "1 stw vpc"
-  value       = aws_vpc.stw_vpc.id
+  value       = aws_vpc.lcchua-tf-vpc.id
 }
 
 
@@ -25,7 +25,7 @@ resource "aws_internet_gateway" "lcchua-tf-igw" {
     Name  = "stw_igw"
   }
 }
-output "stw_igw" {
+output "igw" {
   description = "2 stw igw"
   value       = aws_internet_gateway.stw_igw.id
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "lcchua-tf-private-subnet-az1" {
     Name  = "stw_subnet_private_az1"
   }
 }
-output "lcchua-tf-private-subnet-az1" {
+output "private-subnet-az1" {
   description = "3 stw subnet private subnet az1"
   value       = aws_subnet.lcchua-tf-private-subnet-az1.id
 }
@@ -58,7 +58,7 @@ resource "aws_subnet" "lcchua-tf-private-subnet-az2" {
     Name  = "stw_subnet_private_az2"
   }
 }
-output "lcchua-tf-private-subnet-az2" {
+output "private-subnet-az2" {
   description = "4 stw subnet private subnet az2"
   value       = aws_subnet.lcchua-tf-private-subnet-az2.id
 }
@@ -74,7 +74,7 @@ resource "aws_subnet" "lcchua-tf-public-subnet-az1" {
     Name  = "stw_subnet_public_az1"
   }
 }
-output "lcchua-tf-public-subnet-az1" {
+output "public-subnet-az1" {
   description = "5 stw subnet public subnet az1"
   value       = aws_subnet.lcchua-tf-public-subnet-az1.id
 }
@@ -90,7 +90,7 @@ resource "aws_subnet" "lcchua-tf-public-subnet-az2" {
     Name  = "stw_subnet_public_az2"
   }
 }
-output "lcchua-tf-public-subnet-az2" {
+output "public-subnet-az2" {
   description = "6 stw subnet public subnet az2"
   value       = aws_subnet.lcchua-tf-public-subnet-az2.id
 }
@@ -107,7 +107,7 @@ resource "aws_nat_gateway" "lcchua-tf-nat-gw" {
     group = var.stack_name
   }
 }
-output "lcchua-tf-nat-gw" {
+output "nat-gw" {
   description = "7 stw NAT gateway"
   value       = aws_nat_gateway.lcchua-tf-nat-gw.id
 }
@@ -118,7 +118,7 @@ resource "aws_eip" "lcchua-tf-eip" {
     Name  = "stw_eip"
   }
 }
-output "lcchua-tf-eip" {
+output "eip" {
   description = "8 stw EIP"
   value       = aws_eip.lcchua-tf-eip.id
 }
@@ -139,7 +139,7 @@ resource "aws_route_table" "lcchua-tf-private-rtb-az1" {
     Name  = "stw-private-rtb-az1"
   }
 }
-output "lcchua-tf-private-rtb-az1" {
+output "private-rtb-az1" {
   description = "9a stw private subnet route table"
   value       = aws_route_table.lcchua-tf-private-rtb-az1.id
 }
@@ -157,7 +157,7 @@ resource "aws_route_table" "lcchua-tf-private-rtb-az2" {
     Name  = "stw-private-rtb-az2"
   }
 }
-output "lcchua-tf-private-rtb-az2" {
+output "private-rtb-az2" {
   description = "9b stw private subnet route table"
   value       = aws_route_table.lcchua-tf-private-rtb-az2
 }
@@ -175,7 +175,7 @@ resource "aws_route_table" "lcchua-tf-public-rtb" {
     Name  = "stw-public-rtb"
   }
 }
-output "lcchua-tf-public-rtb" {
+output "public-rtb" {
   description = "10 stw all public subnets route table"
   value       = aws_route_table.lcchua-tf-public-rtb.id
 }
@@ -187,7 +187,7 @@ resource "aws_route_table_association" "lcchua-tf-public-rta-az1" {
   subnet_id      = aws_subnet.lcchua-tf-public-subnet-az1.id
   route_table_id = aws_route_table.lcchua-tf-public-rtb
 }
-output "lcchua-tf-public-rta-az1" {
+output "public-rta-az1" {
   description = "11 stw public rta az1"
   value       = aws_route_table_association.lcchua-tf-public-rta-az1
 }
@@ -196,7 +196,7 @@ resource "aws_route_table_association" "lcchua-tf-public-rta-az2" {
   subnet_id      = aws_subnet.lcchua-tf-public-subnet-az2
   route_table_id = aws_route_table.lcchua-tf-public-rtb
 }
-output "lcchua-tf-public-rta-az2" {
+output "public-rta-az2" {
   description = "12 stw public rta az2"
   value       = aws_route_table_association.lcchua-tf-public-rta-az2.id
 }
@@ -205,7 +205,7 @@ resource "aws_route_table_association" "lcchua-tf-private-rta-az1" {
   subnet_id      = aws_subnet.lcchua-tf-private-subnet-az1
   route_table_id = aws_route_table.lcchua-tf-private-rtb-az1
 }
-output "lcchua-tf-private-rta-az1" {
+output "private-rta-az1" {
   description = "13 stw private rta az1"
   value       = aws_route_table_association.lcchua-tf-private-rta-az1.id
 }
@@ -214,7 +214,7 @@ resource "aws_route_table_association" "lcchua-tf-private-rta_az2" {
   subnet_id      = aws_subnet.lcchua-tf-private-subnet-az2
   route_table_id = aws_route_table.lcchua-tf-private-rtb-az2
 }
-output "lcchua-tf-private-rta-az2" {
+output "private-rta-az2" {
   description = "14 stw private rta az2"
   value       = aws_route_table_association.lcchua-tf-private-rta_az2
 }
@@ -236,7 +236,7 @@ resource "aws_vpc_endpoint" "lcchua-tf-vpce-s3" {
     Name = "stw-vpc-s3-endpoint"
   }
 }
-output "lcchua-tf-vpce-s3" {
+output "vpce-s3" {
   description = "15 stw vpc endpoint for s3"
   value = aws_vpc_endpoint.lcchua-tf-vpce-s3.id
 }
@@ -279,7 +279,7 @@ resource "aws_security_group" "lcchua-tf-sg-allow-ssh-http-https" {
     Name  = "stw-sg-ssh-http-https"
   }
 }
-output "stw_web_sg" {
+output "web-sg" {
   description = "16 stw web security group for ssh http https"
   value = aws_security_group.lcchua-tf-sg-allow-ssh-http-https.id
 }

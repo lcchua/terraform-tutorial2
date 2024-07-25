@@ -21,7 +21,7 @@ data "aws_ami" "lcchua-tf-ami" {
     values = ["Arm"]
   }
 }
-output "lcchua-tf-ami" {
+output "ami" {
   description = "17a stw ami"
   value = data.aws_ami.lcchua-tf-ami.id
 }
@@ -40,7 +40,7 @@ resource "aws_instance" "lcchua-tf-ec2" {
     Name = "stw-ec2-server"
   }
 }
-output "lcchua-tf-ec2" {
+output "ec2" {
   description = "17b stw EC2 server"
   value = aws_instance.lcchua-tf-ec2.id
 }

@@ -14,7 +14,7 @@ resource "aws_s3_bucket" "lcchua-tf-s3bucket" {
       Name = "stw-s3-bucket"
   }
 }
-output "lcchua-tf-s3bucket" {
+output "s3bucket" {
   description = "18a stw devops S3 bucket"
   value = aws_s3_bucket.lcchua-tf-s3bucket.id
 }
@@ -27,7 +27,7 @@ resource "aws_s3_bucket_versioning" "lcchua-tf-s3bucket-versioning" {
     status = "Enabled"
   }
 }
-output "devops_s3bucket_versioning" {
+output "s3bucket-versioning" {
   description = "18b stw devops S3 bucket versioning"
   value = aws_s3_bucket_versioning.lcchua-tf-s3bucket-versioning.id
 }
@@ -57,7 +57,7 @@ resource "aws_s3_bucket_acl" "lcchua-tf-s3bucket-acl" {
   bucket = aws_s3_bucket.lcchua-tf-s3bucket.id
   acl    = "public-read"
 }
-output "lcchua-tf-s3bucket-acl" {
+output "s3bucket-acl" {
   description = "18c stw devops S3 bucket acl set to public read"
   value = aws_s3_bucket_acl.lcchua-tf-s3bucket-acl.id
 }
