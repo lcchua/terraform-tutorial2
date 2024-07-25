@@ -6,12 +6,16 @@ data "aws_ami" "lcchua-tf-ami" {
   owners      = ["amazon"]
 
   filter {
+    name    = "description"
+    values  = ["*Amazon Linux 2023 AMI*"] 
+  }
+  filter {
     name    = "name"
-    values  = ["Amazon Linux 2023 AMI"] 
+    values  = ["al2023-ami-2023.5.20240722.0-kernel-6.1-arm64"]
   }
   filter {
     name    = "image-id"
-    values  = ["ami-0427090fd1714168b"]
+    values  = ["ami-0582e4fe9b72a5fe1"]
   }
 }
 output "ami" {
