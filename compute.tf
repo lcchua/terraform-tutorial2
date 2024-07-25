@@ -11,11 +11,11 @@ data "aws_ami" "lcchua-tf-ami" {
   }
   filter {
     name    = "name"
-    values  = ["al2023-ami-2023.5.20240722.0-kernel-6.1-arm64"]
+    values  = ["al2023-ami-2023.5.20240722.0-kernel-6.1-x86_64"]
   }
   filter {
     name    = "image-id"
-    values  = ["ami-0582e4fe9b72a5fe1"]
+    values  = ["ami-0427090fd1714168b"]
   }
 }
 output "ami" {
