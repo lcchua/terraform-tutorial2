@@ -10,7 +10,7 @@ data "aws_ami" "lcchua-tf-ami" {
     values  = ["Amazon Linux 2023 AMI"] 
   }
   filter {
-    name    = "ami id"
+    name    = "image_id"
     values  = ["ami-0582e4fe9b72a5fe1"]
   }
 }
