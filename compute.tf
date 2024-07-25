@@ -28,7 +28,7 @@ resource "aws_instance" "lcchua-tf-ec2" {
   instance_type = "t2.micro"
 
   key_name      = var.key_name
-  subnet_id     = aws_subnet.lcchua-tf-public-subnet-az1
+  subnet_id     = aws_subnet.lcchua-tf-public-subnet-az1.id
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.lcchua-tf-sg-allow-ssh-http-https.id]
 
