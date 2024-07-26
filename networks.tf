@@ -1,5 +1,7 @@
 
 #============ VPC =============
+# Note that when a VPC is created, a main route table it created by default
+# that is responsible for enabling the flow of network traffic within the VPC
 
 resource "aws_vpc" "lcchua-tf-vpc" {
   cidr_block = "10.0.0.0/16"
