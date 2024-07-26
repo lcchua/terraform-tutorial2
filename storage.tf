@@ -3,20 +3,20 @@
 
 # Bucket with versioning enabled and acl set to public read
 resource "random_id" "s3_id" {
-    byte_length = 2
+  byte_length = 2
 }
 resource "aws_s3_bucket" "lcchua-tf-s3bucket" {
   bucket = "lcchua-bucket-${random_id.s3_id.dec}"
 
   tags = {
-      group = var.stack_name
-      Env = "Dev"
-      Name = "stw-s3-bucket"
+    group = var.stack_name
+    Env   = "Dev"
+    Name  = "stw-s3-bucket"
   }
 }
 output "s3bucket" {
   description = "18a stw devops S3 bucket"
-  value = aws_s3_bucket.lcchua-tf-s3bucket.id
+  value       = aws_s3_bucket.lcchua-tf-s3bucket.id
 }
 
 # Enable bucket versioning 
@@ -29,7 +29,7 @@ resource "aws_s3_bucket_versioning" "lcchua-tf-s3bucket-versioning" {
 }
 output "s3bucket-versioning" {
   description = "18b stw devops S3 bucket versioning"
-  value = aws_s3_bucket_versioning.lcchua-tf-s3bucket-versioning.id
+  value       = aws_s3_bucket_versioning.lcchua-tf-s3bucket-versioning.id
 }
 
 # Enable public read ACL
@@ -59,5 +59,5 @@ resource "aws_s3_bucket_acl" "lcchua-tf-s3bucket-acl" {
 }
 output "s3bucket-acl" {
   description = "18c stw devops S3 bucket acl set to public read"
-  value = aws_s3_bucket_acl.lcchua-tf-s3bucket-acl.id
+  value       = aws_s3_bucket_acl.lcchua-tf-s3bucket-acl.id
 }

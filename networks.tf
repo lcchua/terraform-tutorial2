@@ -55,7 +55,7 @@ output "private-subnet-az1" {
 resource "aws_subnet" "lcchua-tf-private-subnet-az2" {
   vpc_id            = aws_vpc.lcchua-tf-vpc.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = var.az2 
+  availability_zone = var.az2
 
   tags = {
     group = var.stack_name
@@ -69,11 +69,11 @@ output "private-subnet-az2" {
 
 # Public subnet az1
 resource "aws_subnet" "lcchua-tf-public-subnet-az1" {
-  vpc_id                   = aws_vpc.lcchua-tf-vpc.id
+  vpc_id                  = aws_vpc.lcchua-tf-vpc.id
   cidr_block              = "10.0.101.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = var.az1 
- 
+  availability_zone       = var.az1
+
   tags = {
     group = var.stack_name
     Name  = "stw-subnet-public-az1"
@@ -89,7 +89,7 @@ resource "aws_subnet" "lcchua-tf-public-subnet-az2" {
   vpc_id                  = aws_vpc.lcchua-tf-vpc.id
   cidr_block              = "10.0.102.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = var.az2 
+  availability_zone       = var.az2
 
   tags = {
     group = var.stack_name
@@ -236,24 +236,24 @@ output "private-rta-az2" {
 #============ VPC ENDPOINT FOR S3 =============
 
 resource "aws_vpc_endpoint" "lcchua-tf-vpce-s3" {
-  vpc_id       = aws_vpc.lcchua-tf-vpc.id
-  service_name = "com.amazonaws.${var.region}.s3"
+  vpc_id            = aws_vpc.lcchua-tf-vpc.id
+  service_name      = "com.amazonaws.${var.region}.s3"
   vpc_endpoint_type = "Gateway"
   route_table_ids = [
     aws_route_table.lcchua-tf-public-rtb.id
-#    aws_route_table.lcchua-tf-private-rtb-az1.id,
-#    aws_route_table.lcchua-tf-private-rtb-az2.id,
-#    aws_route_table.lcchua-tf-public-rtb.id
+    #    aws_route_table.lcchua-tf-private-rtb-az1.id,
+    #    aws_route_table.lcchua-tf-private-rtb-az2.id,
+    #    aws_route_table.lcchua-tf-public-rtb.id
   ]
 
   tags = {
     group = var.stack_name
-    Name = "stw-vpc-s3-endpoint"
+    Name  = "stw-vpc-s3-endpoint"
   }
 }
 output "vpce-s3" {
   description = "15 stw vpc endpoint for s3"
-  value = aws_vpc_endpoint.lcchua-tf-vpce-s3.id
+  value       = aws_vpc_endpoint.lcchua-tf-vpce-s3.id
 }
 
 #============ SECURITY GROUP =============
@@ -275,7 +275,7 @@ resource "aws_security_group" "lcchua-tf-sg-allow-ssh-http-https" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-    ingress {
+  ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -296,5 +296,5 @@ resource "aws_security_group" "lcchua-tf-sg-allow-ssh-http-https" {
 }
 output "web-sg" {
   description = "16 stw web security group for ssh http https"
-  value = aws_security_group.lcchua-tf-sg-allow-ssh-http-https.id
+  value       = aws_security_group.lcchua-tf-sg-allow-ssh-http-https.id
 }

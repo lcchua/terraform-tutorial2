@@ -9,9 +9,9 @@ terraform {
     }
   }
 
-# To comment backend block if working on local and terraform state file is locally stored
+  # To comment backend block if working on local and terraform state file is locally stored
   backend "s3" {
-    bucket = "sctp-ce7-tfstate" 
+    bucket = "sctp-ce7-tfstate"
     key    = "terraform-ex-ec2-lcchua.tfstate"
     region = "us-east-1"
   }
