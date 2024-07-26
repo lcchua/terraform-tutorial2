@@ -24,10 +24,10 @@ output "ami" {
 }
 
 resource "aws_instance" "lcchua-tf-ec2" {
-  ami           = data.aws_ami.lcchua-tf-ami.id
-  instance_type = "t2.micro"
+  ami                         = data.aws_ami.lcchua-tf-ami.id
+  instance_type               = "t2.micro"
 
-  key_name = var.key_name
+  key_name                    = var.key_name
   # TF Challenge #1 - to create an EC2 key pair using Terraform, 
   # and also download the key pair to your local machine for you to 
   # use to connect to the EC2 instance
@@ -39,9 +39,9 @@ resource "aws_instance" "lcchua-tf-ec2" {
 
   # TF Challenge #2 - to update the previously created EC2 with a user 
   # data script passed in. This is to convert yourthe EC2 into a HTTPD web server.
-  user_data = <<EOF
+  user_data                   = <<EOF
     #!/bin/bash
-    echo "Installing the httpd and docker packages to the EC2 server..." 
+    echo "Installing the httpd and docker packages to the EC2 server..." > /home/ec2_user/userdata_out
     yum update -y
     yum install httpd -y
     yum install docker -y
