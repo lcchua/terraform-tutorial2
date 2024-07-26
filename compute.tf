@@ -39,22 +39,22 @@ resource "aws_instance" "lcchua-tf-ec2" {
 
   # TF Challenge #2 - to update the previously created EC2 with a user 
   # data script passed in. This is to convert your EC2 into a HTTPD web server.
-  user_data                   = <<EOF
-    #!/bin/bash
-    echo "Installing the httpd and docker packages to the EC2 server..." > /home/ec2_user/userdata_out
-    yum update -y
-    yum install httpd -y
-    yum install docker -y
-    systemctl start httpd
-    systemctl enable httpd
-    usermod -a -G apache ec2-user
-    chown -R ec2-user:apache /var/www
-    chmod 2775 /var/www
-    find /var/www -type d -exec chmod 2775 {} \;
-    find /var/www -type f -exec chmod 0664 {} \;
-    echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
-    reboot
-  EOF
+  #user_data                   = <<EOF
+  #  #!/bin/bash
+  #  echo "Installing the httpd and docker packages to the EC2 server..." > /home/ec2_user/userdata_out
+  #  yum update -y
+  #  yum install httpd -y
+  #  yum install docker -y
+  #  systemctl start httpd
+  #  systemctl enable httpd
+  #  usermod -a -G apache ec2-user
+  #  chown -R ec2-user:apache /var/www
+  #  chmod 2775 /var/www
+  #  find /var/www -type d -exec chmod 2775 {} \;
+  #  find /var/www -type f -exec chmod 0664 {} \;
+  #  echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
+  #  reboot
+  #EOF
 
   # Enable detailed monitoring
   monitoring                  = true
