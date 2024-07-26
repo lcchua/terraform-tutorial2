@@ -31,7 +31,7 @@ resource "aws_instance" "lcchua-tf-ec2" {
   # TF Challenge #1 - to create an EC2 key pair using Terraform, 
   # and also download the key pair to your local machine for you to 
   # use to connect to the EC2 instance
-  #  key_name      = aws_key_pair.lcchua-tf-key-pair.key_name
+  #key_name      = aws_key_pair.lcchua-tf-key-pair.key_name
 
   subnet_id                   = aws_subnet.lcchua-tf-public-subnet-az1.id
   associate_public_ip_address = true
@@ -39,21 +39,21 @@ resource "aws_instance" "lcchua-tf-ec2" {
 
   # TF Challenge #2 - to update the previously created EC2 with a user 
   # data script passed in. This is to convert yourthe EC2 into a HTTPD web server.
-  # user_data = <<EOF
-  #  #!/bin/bash
-  #  echo "Installing the httpd and docker packages to the EC2 server..." > 
-  #  yum update -y
-  #  yum install httpd -y
-  #  yum install docker -y
-  #  systemctl start httpd
-  #  systemctl enable httpd
-  #  usermod -a -G apache ec2-user
-  #  chown -R ec2-user:apache /var/www
-  #  chmod 2775 /var/www
-  #  find /var/www -type d -exec chmod 2775 {} \;
-  #  find /var/www -type f -exec chmod 0664 {} \;
-  #  echo "Hello World from $(hostname -f)" > /var/www/html/index.html
-  #EOF
+  user_data = <<EOF
+    #!/bin/bash
+    echo "Installing the httpd and docker packages to the EC2 server..." 
+    yum update -y
+    yum install httpd -y
+    yum install docker -y
+    systemctl start httpd
+    systemctl enable httpd
+    usermod -a -G apache ec2-user
+    chown -R ec2-user:apache /var/www
+    chmod 2775 /var/www
+    find /var/www -type d -exec chmod 2775 {} \;
+    find /var/www -type f -exec chmod 0664 {} \;
+    echo "Hello World from $(hostname -f)" > /var/www/html/index.html
+  EOF
 
   tags = {
     group = var.stack_name
