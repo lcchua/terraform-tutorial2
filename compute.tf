@@ -38,7 +38,7 @@ resource "aws_instance" "lcchua-tf-ec2" {
   vpc_security_group_ids      = [aws_security_group.lcchua-tf-sg-allow-ssh-http-https.id]
 
   # TF Challenge #2 - to update the previously created EC2 with a user 
-  # data script passed in. This is to convert yourthe EC2 into a HTTPD web server.
+  # data script passed in. This is to convert your EC2 into a HTTPD web server.
   user_data                   = <<EOF
     #!/bin/bash
     echo "Installing the httpd and docker packages to the EC2 server..." > /home/ec2_user/userdata_out
@@ -52,8 +52,12 @@ resource "aws_instance" "lcchua-tf-ec2" {
     chmod 2775 /var/www
     find /var/www -type d -exec chmod 2775 {} \;
     find /var/www -type f -exec chmod 0664 {} \;
-    echo "Hello World from $(hostname -f)" > /var/www/html/index.html
+    echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
+    reboot
   EOF
+
+  # Enable detailed monitoring
+  monitoring                  = true
 
   tags = {
     group = var.stack_name
