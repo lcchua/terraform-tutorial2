@@ -41,13 +41,18 @@ resource "aws_instance" "lcchua-tf-ec2" {
   # data script passed in. This is to convert yourthe EC2 into a HTTPD web server.
   # user_data = <<EOF
   #  #!/bin/bash
-  #  sudo echo "Installing the httpd and docker packages to the EC2 server..." > 
-  #  sudo yum update -y
-  #  sudo yum install httpd -y
-  #  sudo yum install docker -y
-  #  sudo systemctl start httpd.service
-  #  sudo systemctl enable httpd.service
-  #  sudo echo "Hello World from $(hostname -f)" > /var/www/html/index.html
+  #  echo "Installing the httpd and docker packages to the EC2 server..." > 
+  #  yum update -y
+  #  yum install httpd -y
+  #  yum install docker -y
+  #  systemctl start httpd
+  #  systemctl enable httpd
+  #  usermod -a -G apache ec2-user
+  #  chown -R ec2-user:apache /var/www
+  #  chmod 2775 /var/www
+  #  find /var/www -type d -exec chmod 2775 {} \;
+  #  find /var/www -type f -exec chmod 0664 {} \;
+  #  echo "Hello World from $(hostname -f)" > /var/www/html/index.html
   #EOF
 
   tags = {
