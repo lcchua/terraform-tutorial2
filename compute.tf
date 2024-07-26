@@ -39,7 +39,6 @@ resource "aws_instance" "lcchua-tf-ec2" {
 
   # TF Challenge #2 - to update the previously created EC2 with a user 
   # data script passed in. This is to convert yourthe EC2 into a HTTPD web server.
-  #  User data script to convert the EC2 server into a HTTPD web server.
   # user_data = <<EOF
   #  #!/bin/bash
   #  sudo echo "Installing the httpd and docker packages to the EC2 server..." > 
