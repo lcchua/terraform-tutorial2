@@ -28,22 +28,28 @@ resource "aws_instance" "lcchua-tf-ec2" {
   instance_type = "t2.micro"
 
   key_name      = var.key_name
+# TF Challenge #1 - to create an EC2 key pair using Terraform, 
+# and also download the key pair to your local machine for you to 
+# use to connect to the EC2 instance
 #  key_name      = aws_key_pair.lcchua-tf-key-pair.key_name
+  
   subnet_id     = aws_subnet.lcchua-tf-public-subnet-az1.id
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.lcchua-tf-sg-allow-ssh-http-https.id]
 
-# User data script to convert the EC2 server into a HTTPD web server
-#  user_data = <<EOF
-#    #!/bin/bash
-#    echo "Installing the httpd and docker packages to the EC2 server..."
-#    yum update -y
-#    yum install httpd -y
-#    yum install docker -y
-#    systemctl start httpd.service
-#    systemctl enable httpd.service
-#    echo "Hello World from $(hostname -f)" > /var/www/html/index.html
-#  EOF
+# TF Challenge #2 - to update the previously created EC2 with a user 
+# data script passed in. This is to convert yourthe EC2 into a HTTPD web server.
+#  User data script to convert the EC2 server into a HTTPD web server.
+  user_data = <<EOF
+    #!/bin/bash
+    echo "Installing the httpd and docker packages to the EC2 server..."
+    yum update -y
+    yum install httpd -y
+    yum install docker -y
+    systemctl start httpd.service
+    systemctl enable httpd.service
+    echo "Hello World from $(hostname -f)" > /var/www/html/index.html
+  EOF
 
   tags = {
     group = var.stack_name
