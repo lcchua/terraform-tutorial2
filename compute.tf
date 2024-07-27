@@ -24,10 +24,10 @@ output "ami" {
 }
 
 resource "aws_instance" "lcchua-tf-ec2" {
-  ami                         = data.aws_ami.lcchua-tf-ami.id
-  instance_type               = "t2.micro"
+  ami           = data.aws_ami.lcchua-tf-ami.id
+  instance_type = "t2.micro"
 
-  key_name                    = var.key_name
+  key_name = var.key_name
   # TF Challenge #1 - to create an EC2 key pair using Terraform, 
   # and also download the key pair to your local machine for you to 
   # use to connect to the EC2 instance
