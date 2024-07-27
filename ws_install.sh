@@ -2,7 +2,7 @@
 
 #!/bin/bash -xe
 exec >>(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&1
-echo "Installing the httpd and docker packages to the EC2 server..." > /home/ec2_user/userdata_out
+echo "Installing the httpd and docker packages to the EC2 server..." > /home/ec2-user/userdata_out
 
 <<COMMENT_OUT
 yum update -y
