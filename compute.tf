@@ -31,7 +31,7 @@ resource "aws_instance" "lcchua-tf-ec2" {
   # TF Challenge #1 - to create an EC2 key pair using Terraform, 
   # and also download the key pair to your local machine for you to 
   # use to connect to the EC2 instance
-  #key_name      = aws_key_pair.lcchua-tf-key-pair.key_name
+  //key_name      = aws_key_pair.lcchua-tf-key-pair.key_name
 
   subnet_id                   = aws_subnet.lcchua-tf-public-subnet-az1.id
   associate_public_ip_address = true
@@ -42,7 +42,7 @@ resource "aws_instance" "lcchua-tf-ec2" {
   user_data = file("${path.module}/ws_install.sh")
 
   # Enable detailed monitoring
-  #monitoring                  = true
+  //monitoring                  = true
 
   tags = {
     group = var.stack_name
