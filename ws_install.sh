@@ -1,10 +1,9 @@
 # To bootstrap the installation of httpd and docker upon creation of EC2 instance
 
 #!/bin/bash
-echo "Installing the httpd and docker packages to the EC2 server..." > /home/ec2-user/tf_userdata_out
+echo "Installing the httpd and docker packages to the EC2 server..." > /tmp/ec2-user/tf_userdata.txt
 
 <<COMMENT_OUT
-exec >>(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&1
 yum update -y
 yum install httpd -y
 yum install docker -y

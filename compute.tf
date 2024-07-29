@@ -39,6 +39,7 @@ resource "aws_instance" "lcchua-tf-ec2" {
 
   # TF Challenge #2 - to update the previously created EC2 with a user 
   # data script passed in. This is to convert your EC2 into a HTTPD web server.
+  user_data_replace_on_change = true    // to trigger a destroy and recreate
   user_data = file("${path.module}/ws_install.sh")
 
   # Enable detailed monitoring
