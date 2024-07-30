@@ -27,11 +27,11 @@ resource "aws_instance" "lcchua-tf-ec2" {
   ami           = data.aws_ami.lcchua-tf-ami.id
   instance_type = "t2.micro"
 
-  key_name = var.key_name
+  // key_name = var.key_name
   # TF Challenge #1 - to create an EC2 key pair using Terraform, 
   # and also download the key pair to your local machine for you to 
   # use to connect to the EC2 instance
-  //key_name      = aws_key_pair.lcchua-tf-key-pair.key_name
+  key_name      = aws_key_pair.lcchua-tf-key-pair.key_name
 
   subnet_id                   = aws_subnet.lcchua-tf-public-subnet-az1.id
   associate_public_ip_address = true
