@@ -1,13 +1,13 @@
 # To generate a private key
-resource "tls_private_key" "lcchua-tf-key-pair" {
+resource "tls_private_key" "lcchua-tf-rsa-key" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
-# To create AWS key pair
+# To create AWS key pair resource using the public key
 resource "aws_key_pair" "lcchua-tf-key-pair" {
   key_name   = "lcchua-key-pair"
-  public_key = tls_private_key.key_pair.public_key_openssh
+  public_key = tls_private_key.lcchua-tf-rsa-key.public_key_openssh
 
   tags = {
     group = var.stack_name
@@ -16,13 +16,13 @@ resource "aws_key_pair" "lcchua-tf-key-pair" {
 }
 
 # To save the private key to a local file
-resource "local_sensitive_file" "pem_file" {
-  filename = "${path.module}/my-key-pair.pem"
-  content  = tls_private_key.key_pair.private_key_pem
+resource "local_file" "pem_file" {
+  content  = tls_private_key.lcchua-tf-rsa-key.private_key_pem
+  filename = "${path.module}/lcchua-${var.region}-30072024.pem"
   file_permission = "0400"
 }
 
 output "key-pair" {
   description = "19 stw ec2 key pairs"
-  value = aws_security_group.lcchua-tf-sg-allow-ssh-http-https.id
+  value = aws_key_pair.lcchua-tf-key-pair.id
 }
