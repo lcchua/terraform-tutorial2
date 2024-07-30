@@ -18,7 +18,7 @@ resource "aws_key_pair" "lcchua-tf-key-pair" {
 # To save the private key to a local file
 resource "local_file" "pem_file" {
   content  = tls_private_key.lcchua-tf-rsa-key.private_key_pem
-  filename = "${path.module}/lcchua-${var.region}-30072024.pem"
+  filename = "${var.working_dir}/lcchua-${var.region}-30072024.pem"
   file_permission = "0400"
 }
 

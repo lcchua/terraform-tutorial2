@@ -10,6 +10,13 @@ variable "key_name" {
   default     = "lcchua-useast1-20072024" #
 }
 
+variable "working_dir" {
+  description = "Pathname of my local working directory"
+  type        = string
+  default     = "/Users/laich/NTU_CE7"
+//  default     = "${pathexpand("~")}/NTU_CE7"
+}
+
 variable "region" {
   description = "Name of aws region"
   type        = string
