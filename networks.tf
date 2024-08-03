@@ -140,7 +140,7 @@ resource "aws_route_table" "lcchua-tf-private-rtb-az1" {
 
   # since this is exactly the route AWS will create, the route will be adopted
   route {
-    cidr_block = aws_vpc.my_vpc.cidr_block
+    cidr_block = aws_vpc.lcchua-tf-vpc.cidr_block
     gateway_id = "local"
   }
 
@@ -165,7 +165,7 @@ resource "aws_route_table" "lcchua-tf-private-rtb-az2" {
 
   # since this is exactly the route AWS will create, the route will be adopted
   route {
-    cidr_block = aws_vpc.my_vpc.cidr_block
+    cidr_block = aws_vpc.lcchua-tf-vpc.cidr_block
     gateway_id = "local"
   }
 
@@ -190,10 +190,10 @@ resource "aws_route_table" "lcchua-tf-public-rtb" {
 
   # since this is exactly the route AWS will create, the route will be adopted
   route {
-    cidr_block = aws_vpc.my_vpc.cidr_block
+    cidr_block = aws_vpc.lcchua-tf-vpc.cidr_block
     gateway_id = "local"
   }
-  
+
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.lcchua-tf-igw.id
