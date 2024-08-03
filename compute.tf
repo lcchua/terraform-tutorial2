@@ -13,10 +13,12 @@ data "aws_ami" "lcchua-tf-ami" {
     name   = "name"
     values = ["al2023-ami-2023.5.20240722.0-kernel-6.1-x86_64"]
   }
+/* Commented out in case the AMI image id changes over time by AWS
   filter {
     name   = "image-id"
     values = ["ami-0427090fd1714168b"]
   }
+*/
 }
 output "ami" {
   description = "17a stw ami"
