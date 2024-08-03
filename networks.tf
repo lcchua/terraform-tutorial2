@@ -138,6 +138,12 @@ output "eip" {
 resource "aws_route_table" "lcchua-tf-private-rtb-az1" {
   vpc_id = aws_vpc.lcchua-tf-vpc.id
 
+  # since this is exactly the route AWS will create, the route will be adopted
+  route {
+    cidr_block = aws_vpc.my_vpc.cidr_block
+    gateway_id = "local"
+  }
+
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.lcchua-tf-nat-gw.id
@@ -156,6 +162,12 @@ output "private-rtb-az1" {
 # Private rtb az2
 resource "aws_route_table" "lcchua-tf-private-rtb-az2" {
   vpc_id = aws_vpc.lcchua-tf-vpc.id
+
+  # since this is exactly the route AWS will create, the route will be adopted
+  route {
+    cidr_block = aws_vpc.my_vpc.cidr_block
+    gateway_id = "local"
+  }
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -176,6 +188,12 @@ output "private-rtb-az2" {
 resource "aws_route_table" "lcchua-tf-public-rtb" {
   vpc_id = aws_vpc.lcchua-tf-vpc.id
 
+  # since this is exactly the route AWS will create, the route will be adopted
+  route {
+    cidr_block = aws_vpc.my_vpc.cidr_block
+    gateway_id = "local"
+  }
+  
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.lcchua-tf-igw.id
